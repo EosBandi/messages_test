@@ -268,7 +268,7 @@ namespace messages_test
                 if (!string.IsNullOrEmpty(value) &&
                     !Regex.IsMatch(value, BuildRegExForFilterFormat(), RegexOptions.Singleline))
                     throw new ArgumentException("Filter is not in " +
-                          "the format: propName[<>=]'value'.");
+                          "the format: propName[<>= @]'value'.");
 
                 //Turn off list-changed events.
                 RaiseListChangedEvents = false;
