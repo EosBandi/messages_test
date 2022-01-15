@@ -215,8 +215,12 @@ namespace messages_test
                 return;
 
             //I supposed the image column is at index 1
-            if (e.ColumnIndex == Delete.Index)
-                e.Value = messages_test.Properties.Resources.OK;
+            if (e.ColumnIndex == Info.Index)
+                e.Value = messages_test.Properties.Resources.info1;
+            else if (e.ColumnIndex == Delete.Index)
+                e.Value = messages_test.Properties.Resources.trash;
+
+
         }
     }
 }

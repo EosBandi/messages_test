@@ -35,8 +35,8 @@ namespace messages_test
             this.Message = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Severity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Repeats = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Delete = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.Info = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.Delete = new System.Windows.Forms.DataGridViewImageColumn();
+            this.Info = new System.Windows.Forms.DataGridViewImageColumn();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
@@ -133,6 +133,7 @@ namespace messages_test
             this.Info.DataPropertyName = "Info";
             this.Info.HeaderText = "Info";
             this.Info.Name = "Info";
+            this.Info.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Normal;
             this.Info.ReadOnly = true;
             // 
             // button1
@@ -276,8 +277,8 @@ namespace messages_test
         private System.Windows.Forms.DataGridViewTextBoxColumn Message;
         private System.Windows.Forms.DataGridViewTextBoxColumn Severity;
         private System.Windows.Forms.DataGridViewTextBoxColumn Repeats;
-        private System.Windows.Forms.DataGridViewButtonColumn Delete;
-        private System.Windows.Forms.DataGridViewButtonColumn Info;
+        private System.Windows.Forms.DataGridViewImageColumn Delete;
+        private System.Windows.Forms.DataGridViewImageColumn Info;
         private System.Windows.Forms.DataGridViewTextBoxColumn sysID;
     }
 }
