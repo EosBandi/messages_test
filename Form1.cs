@@ -216,9 +216,9 @@ namespace messages_test
 
             //I supposed the image column is at index 1
             if (e.ColumnIndex == Info.Index)
-                e.Value = messages_test.Properties.Resources.info1;
+                e.Value = messages_test.Properties.Resources.info2;
             else if (e.ColumnIndex == Delete.Index)
-                e.Value = messages_test.Properties.Resources.trash;
+                e.Value = messages_test.Properties.Resources.trash2;
 
 
         }
