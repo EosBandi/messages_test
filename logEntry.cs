@@ -10,12 +10,16 @@ namespace messages_test
     class logEntry
     {
         public DateTime Time { get; set; }
+        public Byte sysid { get; set; }
         public String MessageText { get; set; }
         public String SeverityText { get; set; }
-        [Browsable(false)]  public int Severity { get; set; }
+        [Browsable(false)] public int Severity { get; set; }
         public int Repeats { get; set; }
 
-        public logEntry(DateTime time, string message, int severity)
+
+
+
+        public logEntry(DateTime time, string message, int severity, byte systemID = 1)
         {
 
             string[] severityNames = new string[] { "EMERGENCY", "ALERT", "CRITICAL", "ERROR", "WARNING", "NOTICE", "INFO", "DEBUG" };
@@ -23,7 +27,7 @@ namespace messages_test
             MessageText = message;
             SeverityText = severityNames[severity];
             Severity = severity;
-
+            sysid = systemID;
         }
 
 

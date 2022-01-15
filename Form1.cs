@@ -25,6 +25,9 @@ namespace messages_test
             InitializeComponent();
 
 
+            dataGridView1.Columns[Delete.Index].CellTemplate.Value = messages_test.Properties.Resources.OK;
+            dataGridView1.Columns[Info.Index].CellTemplate.Value = messages_test.Properties.Resources.Info;
+
             dataGridView1.Columns[Time.Index].DefaultCellStyle.Format = "HH:mm:ss";
             this.dataGridView1.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dataGridView1_RowPrePaint);
             source.DataSource = log;
@@ -40,8 +43,6 @@ namespace messages_test
                 string message = "message" + (i % 20).ToString();
                 addNewEntry(DateTime.Now.AddSeconds(rand.Next(240)), rand.Next(7), message);
             }
-
-            
         }
         private void dataGridView1_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
         {
@@ -49,12 +50,16 @@ namespace messages_test
         }
 
 
-        private int getLogIndex(int severity, string message)
+        private int getLogIndex(int severity, string message, byte sysID)
         {
+
+            //Ok this is ugly, but works. 
 
             for (int i=0;i<log.Count;i++)
             {
-                if ((log.OriginalList[i].SeverityText == severityNames[severity]) && (log.OriginalList[i].MessageText == message))
+                if ((log.OriginalList[i].SeverityText == severityNames[severity])
+                    && (log.OriginalList[i].MessageText == message)
+                    && (log.OriginalList[i].sysid == sysID))
                 {
                     return i;
                 }
@@ -64,17 +69,17 @@ namespace messages_test
 
         }
 
-        private void addNewEntry(DateTime time, int severity, string message)
+        private void addNewEntry(DateTime time, int severity, string message, byte sysID = 1)
         {
 
             var filt = source.Filter;
             source.RemoveFilter();
 
-            var index = getLogIndex(severity, message);
+            var index = getLogIndex(severity, message, sysID);
 
             if (index < 0)
             {
-                log.Add(new logEntry(time, message, severity));
+                log.Add(new logEntry(time, message, severity, sysID));
                 log.ApplySort("Time", ListSortDirection.Descending);
             }
             else
@@ -92,12 +97,12 @@ namespace messages_test
 
         }
 
-        private void removeEntry(int severity, string message)
+        private void removeEntry(int severity, string message, byte sysID = 1)
         {
             var filt = source.Filter;
             source.RemoveFilter();
 
-            var index = getLogIndex(severity, message);
+            var index = getLogIndex(severity, message, sysID);
             if (index < 0)
             {
             }
@@ -122,9 +127,15 @@ namespace messages_test
 
         private void button2_Click(object sender, EventArgs e)
         {
-            addNewEntry(DateTime.Now.AddMinutes(4), rand.Next(7), "message XXX");
+            addNewEntry(DateTime.Now.AddMinutes(4), rand.Next(7), "message XXX", 1);
         }
 
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            addNewEntry(DateTime.Now.AddMinutes(4), rand.Next(7), "message XXX", 2);
+
+        }
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
             dataGridView1.ClearSelection();
@@ -184,6 +195,28 @@ namespace messages_test
             {
                 removeEntry(Array.IndexOf(severityNames, senderGrid.Rows[e.RowIndex].Cells[4].Value), senderGrid.Rows[e.RowIndex].Cells[3].Value.ToString());
             }
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            dataGridView1.Columns["sysid"].Visible = false;
+            dataGridView1.Columns["componentid"].Visible = false;
+        }
+
+        private void dataGridView1_DefaultValuesNeeded(object sender, DataGridViewRowEventArgs e)
+        {
+            e.Row.Cells[Info.Index].Value = messages_test.Properties.Resources.Info;
+            e.Row.Cells[Delete.Index].Value = messages_test.Properties.Resources.OK;
+        }
+
+        private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.RowIndex < 0)
+                return;
+
+            //I supposed the image column is at index 1
+            if (e.ColumnIndex == Delete.Index)
+                e.Value = messages_test.Properties.Resources.OK;
         }
     }
 }
